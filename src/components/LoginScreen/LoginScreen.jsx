@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState } from 'react';
 import { View, TextInput, Button, Alert, StyleSheet, TouchableOpacity, Text, ImageBackground } from 'react-native';
 
@@ -6,7 +7,7 @@ const LoginScreen = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const [hidePassword, setHidePassword] = useState(true);
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         // Aqui você pode adicionar a lógica de autenticação
         if (username === '' || password === '') {
             Alert.alert('Erro', 'Por favor, insira o nome de usuário e a senha');
@@ -14,7 +15,16 @@ const LoginScreen = ({ navigation }) => {
             // Se a autenticação for bem-sucedida, redirecione para a tela Home
             // Aqui você pode adicionar a lógica para verificar o nome de usuário e a senha com seus dados armazenados ou com seu serviço de autenticação
             if (username === 'admin' && password === 'admin') {
-                navigation.navigate('Home');
+                userInfo = JSON.parse(await AsyncStorage.getItem('user'))
+                if(userInfo){
+                    navigation.navigate('Home', {
+                        userData: userInfo
+                    });
+                } else{
+                    navigation.navigate('Home', {
+                        userData: ''
+                    });
+                }
             } else {
                 Alert.alert('Erro', 'Nome de usuário ou senha incorretos');
             }

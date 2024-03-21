@@ -128,13 +128,13 @@ const ProfileScreen = ({ navigation }) => {
                                 onValueChange={itemValue => setUser({ ...user, activityLevel: itemValue })}
                                 style={styles.picker}
                             >
-                                <Picker.Item label="BMR" value={'level_1'} />
-                                <Picker.Item label="Sedentary: little or no exercise" value={'level_2'} />
-                                <Picker.Item label="Exercise 1-3 times/week" value={'level_3'} />
+                                {/* <Picker.Item label="BMR" value={'level_1'} /> */}
+                                <Picker.Item label="Sedentary: little or no exercise" value={'level_1'} />
+                                <Picker.Item label="Exercise 1-3 times/week" value={'level_2'} />
                                 <Picker.Item label="Exercise 4-5 times/week" value={'level_4'} />
-                                <Picker.Item label="Daily exercise or intense exercise 3-4 times/week" value={'level_5'} />
-                                <Picker.Item label="Intense exercise 6-7 times/week" value={'level_6'} />
-                                <Picker.Item label="Very intense exercise daily, or physical job" value={'level_7'} />
+                                <Picker.Item label="Daily exercise or intense exercise 3-4 times/week" value={'level_4'} />
+                                <Picker.Item label="Intense exercise 6-7 times/week" value={'level_5'} />
+                                <Picker.Item label="Very intense exercise daily, or physical job" value={'level_6'} />
                             </Picker>
                             </View>
                         </View>
@@ -146,7 +146,7 @@ const ProfileScreen = ({ navigation }) => {
                                 onValueChange={itemValue => setUser({ ...user, goal: itemValue })}
                                 style={styles.picker}
                             >
-                                <Picker.Item label="Maintain weight" value="Maintain weight" />
+                                <Picker.Item label="Maintain weight" value="maintain weight" />
                                 <Picker.Item label="Mild weight loss" value="Mild weight loss" />
                                 <Picker.Item label="Weight loss" value="Weight loss" />
                                 <Picker.Item label="Extreme weight loss" value="Extreme weight loss" />

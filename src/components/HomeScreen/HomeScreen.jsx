@@ -11,129 +11,165 @@ const HomeScreen = ({ navigation, route }) => {
     const [bodyFatPercentage, setBodyFatPercentage] = useState('');
     const [idealWeight, setIdealWeight] = useState('');
 
-    const [goalValue, setGoalValue] = useState('')
+    let userData = route.params.userData
 
-    const [activityLevelNumber, setActivityLevelNumber] = useState('')
-    
+    const fetchData = async () => {
+        const url = 'https://fitness-calculator.p.rapidapi.com';
 
-    useEffect(() => {
-        if(userData){
-            fetchData();
-        }
-        const fetchData = async () => {
-            try {
-                const url = 'https://fitness-calculator.p.rapidapi.com';
-
-                const options = {
-                    method: 'GET',
-                    headers: {
-                        'X-RapidAPI-Key': 'f4049a9fdcmshc92d3baac82a724p134b29jsn7d78df1d390b',
-                        'X-RapidAPI-Host': 'fitness-calculator.p.rapidapi.com'
-                    }
-                };
-
-                // Fetch para Calorias Diárias
-                fetch(`${url}/dailycalorie?age=${route.params.userData.age}&gender=${route.params.userData.gender}&weight=${route.params.userData.weight}&height=${route.params.userData.height}&activitylevel=${route.params.userData.activityLevel}`, options)
-                    .then(response => response.json())
-                    .then(data => {
-                        setDailyCalories(data.data.goals[route.params.userData.goal].calory);
-                    });
-
-                // Fetch para BMI
-                fetch(`${url}/bmi?age=${route.params.userData.age}&weight=${route.params.userData.weight}&height=${route.params.userData.height}`, options)
-                    .then(response => response.json())
-                    .then(data => {
-                        setBmi(data.data.bmi);
-                    });
-
-                // Fetch para Macros
-                // fetch(`${url}/macrocalculator?age=${route.params.userData.age}&gender=${route.params.userData.gender}&height=${route.params.userData.height}&weight=${route.params.userData.weight}&activitylevel=${route.params.userData.activityLevel}&goal=${route.params.userData.goal}`, options)
-                //     .then(response => response.json())
-                //         .then(data => {
-                //             setProteinMacro (data.data.balanced.protein).toFixed(0),
-                //             setCarbsMacro (data.data.balanced.carbs).toFixed(0),
-                //             setFatMacro (data.data.balanced.fat).toFixed(0)
-                //         });
-
-                // TESTAR --------------------------------------------------------------------
-
-                switch (route.params.userData.goal) {
-                    case "Maintain weight":
-                        setGoalValue('maintain')
-                    case "Mild weight loss":
-                        setGoalValue('midlose')
-                    case "Weight loss":
-                        setGoalValue('weightlose')
-                    case "Extreme weight loss":
-                        setGoalValue('extremelose')
-                    case "Mild weight gain":
-                        setGoalValue('mildgain')
-                    case "Weight gain":
-                        setGoalValue('weightgain')
-                    case "Extreme weight gain":
-                        setGoalValue('extremegain')
-                }
-
-                switch (route.params.userData.activityLevel) {
-                    case "level_1":
-                        setActivityLevelNumber(1)
-                    case "level_2":
-                        setActivityLevelNumber(2)
-                    case "level_3":
-                        setActivityLevelNumber(3)
-                    case "level_4":
-                        setActivityLevelNumber(4)
-                    case "level_5":
-                        setActivityLevelNumber(5)
-                    case "level_6":
-                        setActivityLevelNumber(6)
-                    case "level_7":
-                        setActivityLevelNumber(7)
-                }
-
-
-                fetch(`${url}/macrocalculator?age=${route.params.userData.age}&gender=${route.params.userData.gender}&height=${route.params.userData.height}&weight=${route.params.userData.weight}&activitylevel=${activityLevelNumber}&goal=${goalValue}`, options)
-                    .then(response => response.json())
-                    .then(data => {
-                        setProteinMacro(data.data.balanced.protein)
-                        setCarbsMacro(data.data.balanced.carbs)
-                        setFatMacro(data.data.balanced.fat)
-                    });
-
-                // TESTAR --------------------------------------------------------------------
-
-
-
-                // Fetch para Percentual de Gordura Corporal
-                fetch(`${url}/bodyfat?age=${route.params.userData.age}&gender=${route.params.userData.gender}&weight=${route.params.userData.weight}&height=${route.params.userData.height}&neck=${route.params.userData.neck}&waist=${route.params.userData.waist}&hip=${route.params.userData.hip}`, options)
-                    .then(response => response.json())
-                    .then(data => {
-                        setBodyFatPercentage(data.data["Body Fat (U.S. Navy Method)"]);
-                    });
-
-                // Fetch para Peso Ideal
-                fetch(`${url}/idealweight?gender=${route.params.userData.gender}&height=${route.params.userData.height}`, options)
-                    .then(response => response.json())
-                    .then(data => {
-                        setIdealWeight(data.data.Devine);
-                    });
-
-            } catch (error) {
-                console.error(error);
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': 'f4049a9fdcmshc92d3baac82a724p134b29jsn7d78df1d390b',
+                'X-RapidAPI-Host': 'fitness-calculator.p.rapidapi.com'
             }
         };
+
+        // Fetch para Calorias Diárias
+        const fetchCalories = () => {
+            fetch(`${url}/dailycalorie?age=${userData.age}&gender=${userData.gender}&weight=${userData.weight}&height=${userData.height}&activitylevel=${userData.activityLevel}`, options)
+                .then(response => response.json())
+                .then(data => {
+                    console.info("goals: ", data.data.goals["maintain weight"])
+                    if(userData.goal === "maintain weight"){
+                        setDailyCalories((data.data.goals[userData.goal]).toFixed(2))
+                    } else{
+                        setDailyCalories((data.data.goals[userData.goal].calory).toFixed(2));
+                    }
+                })
+                .catch((error) => {
+                    console.info(error);
+                })
+        }
+
+        fetchCalories()
+
+        // Fetch para BMI
+        const fetchBMI = () => {
+            fetch(`${url}/bmi?age=${userData.age}&weight=${userData.weight}&height=${userData.height}`, options)
+                .then(response => response.json())
+                .then(data => {
+                    setBmi(data.data.bmi);
+                });
+        }
+
+        fetchBMI()
+
+
+        const fetchMacro = () => {
+            let goalValue
+            let activityLevelNumber
+
+            switch (userData.goal) {
+                case "maintain weight":
+                    goalValue = 'maintain'
+                    break
+                case "Mild weight loss":
+                    goalValue = 'midlose'
+                    break
+                case "Weight loss":
+                    goalValue = 'weightlose'
+                    break
+                case "Extreme weight loss":
+                    goalValue = 'extremelose'
+                    break
+                case "Mild weight gain":
+                    goalValue = 'mildgain'
+                    break
+                case "Weight gain":
+                    goalValue = 'weightgain'
+                    break
+                case "Extreme weight gain":
+                    goalValue = 'extremegain'
+                    break
+            }
+
+            switch (userData.activityLevel) {
+                case "level_1":
+                    activityLevelNumber = 1
+                    break
+                case "level_2":
+                    activityLevelNumber = 2
+                    break
+                case "level_3":
+                    activityLevelNumber = 3
+                    break
+                case "level_4":
+                    activityLevelNumber = 4
+                    break
+                case "level_5":
+                    activityLevelNumber = 5
+                    break
+                case "level_6":
+                    activityLevelNumber = 6
+                    break
+                case "level_7":
+                    activityLevelNumber = 7
+                    break
+            }
+
+
+            fetch(`${url}/macrocalculator?age=${userData.age}&gender=${userData.gender}&height=${userData.height}&weight=${userData.weight}&activitylevel=${activityLevelNumber}&goal=${goalValue}`, options)
+                .then(response => response.json())
+                .then(data => {
+                    setProteinMacro(data.data.balanced.protein.toFixed(0))
+                    setCarbsMacro(data.data.balanced.carbs.toFixed(0))
+                    setFatMacro(data.data.balanced.fat.toFixed(0))
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        }
+
+        fetchMacro()
+
+        // Fetch para Percentual de Gordura Corporal
+        const fetchPercentual = () => {
+            fetch(`${url}/bodyfat?age=${userData.age}&gender=${userData.gender}&weight=${userData.weight}&height=${userData.height}&neck=${userData.neck}&waist=${userData.waist}&hip=${userData.hip}`, options)
+                .then(response => response.json())
+                .then(data => {
+                    setBodyFatPercentage(data.data["Body Fat (U.S. Navy Method)"]);
+                });
+        }
+
+        fetchPercentual()
+
+        // Fetch para Peso Ideal
+        const fetchIdeal = () => {
+            fetch(`${url}/idealweight?gender=${userData.gender}&height=${userData.height}`, options)
+                .then(response => response.json())
+                .then(data => {
+                    setIdealWeight(data.data.Devine);
+                });
+        }
+
+        fetchIdeal()
+    };
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            fetchData();
+            console.log('reloaded');
+        })
+        // essa função é pra recarregar a página quando volta pra ela, foi pra debug. nao sei se influencia muito, se testar e funcionar sem, pode apagar
+
+        if (userData != '') {
+            fetchData();
+        } else {
+            console.log(userData, 'vazio')
+        }
 
         navigation.setOptions({
             headerLeft: () => null,
         });
 
-        fetchData();
-    }, [route.params?.userData]);
+        return unsubscribe
+
+    }, [route]);
 
 
 
     return (
-        userData ?
+        userData != '' ?
 
             <ImageBackground source={require('../../assets/imagens/HomeScreen.jpg')} style={styles.background}>
                 <View style={styles.container}>
@@ -185,12 +221,12 @@ const HomeScreen = ({ navigation, route }) => {
 
             <ImageBackground source={require('../../assets/imagens/HomeScreen.jpg')} style={styles.background}>
                 <View style={styles.container}>
+                    <Text>Defina seu perfil!</Text>
                     <TouchableOpacity
                         onPress={() => navigation.navigate('Profile')}
                         style={styles.profileButton}>
                         <Text style={styles.buttonText}>Perfil</Text>
                     </TouchableOpacity>
-                    <Text>Defina seu perfil!</Text>
                 </View>
             </ImageBackground>
     );
