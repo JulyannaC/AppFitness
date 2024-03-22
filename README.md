@@ -1,79 +1,51 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# NutriCount
 
-# Getting Started
+## Visão Geral
+NutriCount é um aplicativo móvel desenvolvido em React Native, projetado para auxiliar os usuários no monitoramento de sua ingestão diária de calorias,
+peso ideal e quantidade de macros, de acordo com seus objetivos. Além disso, o aplicativo fornece informações sobre o Índice de Massa Corporal (IMC) 
+e o percentual de gordura corporal, permitindo que os usuários tenham uma visão abrangente de sua saúde e progresso.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Funcionalidades Principais
+### Monitoramento de Calorias e Macros
+NutriCount permite aos usuários inserir seus dados pessoais, como idade, peso, medidas corporais, nível de atividade e objetivo.
+Com base nessas informações, o aplicativo calcula a quantidade ideal de calorias e macros para ajudar os usuários a atingirem seus objetivos de forma eficaz.
 
-## Step 1: Start the Metro Server
+### Visualização das Informações
+Na tela principal, os usuários podem visualizar cards com as calorias diárias, IMC, macros (proteínas, carboidratos e gorduras), percentual de gordura corporal e peso ideal.
+Esses dados são atualizados automaticamente com base nas informações inseridas pelo usuário e são facilmente acessíveis para acompanhamento contínuo de seu desenvolvimento.
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+### Gerenciamento de Perfil
+A tela de perfil permite aos usuários visualizar e editar suas informações pessoais a qualquer momento. 
+Isso garante que os dados exibidos na tela principal estejam sempre alinhados com as metas e necessidades individuais de cada usuário.
 
-To start Metro, run the following command from the _root_ of your React Native project:
+## Telas
+https://github.com/JulyannaC/AppFitness/assets/128107511/86633295-33ed-49cb-a3c6-437f6b788459
 
-```bash
-# using npm
-npm start
+### LoginScreen
+A tela de login serve como o ponto de entrada para os usuários, onde eles podem inserir suas credenciais e acessar o aplicativo. 
+Com um design exclusivo, incluindo uma imagem de fundo personalizada e a logo do NutriCount, esta tela proporciona uma experiência acolhedora e intuitiva para os usuários.
 
-# OR using Yarn
-yarn start
-```
+### HomeScreen
+Na tela inicial, os usuários podem visualizar os cards com seu consumo de calorias, macros e outros indicadores-chave de saúde. 
+Esses dados são atualizados dinamicamente com base nas informações fornecidas pelo usuário no perfil.  
 
-## Step 2: Start your Application
+### ProfileScreen
+A tela de perfil permite aos usuários visualizar e editar suas informações pessoais.
+Qualquer alteração feita nesta tela refletirá automaticamente nos cálculos de calorias, macros e outras métricas exibidas na HomeScreen.
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+**Ambas as informações, do perfil e da tela inicial, são armazenadas localmente utilizando AsyncStorage. 
+Isso significa que mesmo quando o usuário fecha o aplicativo e o abre novamente, seus dados pessoais e de progresso são preservados, 
+proporcionando uma experiência contínua e sem interrupções.**
 
-### For Android
+## Tecnologias usadas
+O aplicativo NutriCount foi construído usando as seguintes tecnologias:
 
-```bash
-# using npm
-npm run android
+- JavaScript: principal linguagem de programação utilizada no desenvolvimento de aplicativos.
 
-# OR using Yarn
-yarn android
-```
+- React Native: Biblioteca javascript usada para desenvolvimento de aplicativos móveis multiplataforma.
 
-### For iOS
+- API Fitness Calculator: NutriCount faz uso da API Fitness Calculator (https://rapidapi.com/malaaddincelik/api/fitness-calculator/)
+para realizar cálculos precisos relacionados à saúde e fitness. Esta API fornece os recursos necessários para calcular calorias, macros
+e outros indicadores importantes com base nos dados fornecidos pelos usuários.
 
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+### Com NutriCount, monitorar sua saúde e alcançar seus objetivos nunca foi tão fácil e conveniente! 
